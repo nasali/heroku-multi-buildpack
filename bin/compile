@@ -9,6 +9,7 @@ log "Processing #{TRIGGER_FILE_NAME}..."
 repos = IO.readlines(TRIGGER_FILE)
 
 repos.each do |git_repo|
+  git_repo.gsub!('\n','')
   name = git_repo.split('/').last
   log "Cloning #{name}"
   Dir.mktmpdir(name) do |dir| 
