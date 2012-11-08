@@ -3,9 +3,6 @@
 $:.unshift File.expand_path("../../lib", __FILE__)
 require "multipack"
 
-WORK_DIR = ARGV[0]
-TRIGGER_FILE = '.buildpacks'
-
 if File.exists? File.join(WORK_DIR,TRIGGER_FILE)
   log "Multi-buildpack"
   exit 0
