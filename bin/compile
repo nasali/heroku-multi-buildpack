@@ -19,6 +19,7 @@ repos.each do |git_repo|
   result = $?.success?
   if result
     log "Detecting"
+    `chmod +x #{File.join(dir,'bin','detect')}`
     detect = `#{File.join(dir,'bin','detect')} #{WORK_DIR}`
     puts detect
     else
