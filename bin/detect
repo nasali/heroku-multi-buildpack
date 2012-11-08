@@ -2,7 +2,7 @@
 
 $:.unshift File.expand_path("../../lib", __FILE__)
 require "multipack"
-include Multipack
+include ::Multipack
 
 puts "checking for #{ARGV[1]} in #{ARGV[0]}"
 WORK_DIR = ARGV[0]
