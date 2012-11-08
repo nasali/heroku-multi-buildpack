@@ -24,15 +24,15 @@ repos.each do |git_repo|
     fix_executable_permissions(detect,compile,release)
 
     log "Detecting..."    
-    detect_output = `#{detect_executable} #{WORK_DIR}`
+    detect_output = `#{detect} #{WORK_DIR}`
     if $?.success?
       puts detect_output
       log "Compiling..."
-      compile_output = `#{compile_executable} #{WORK_DIR} #{CACHE_DIR}`
+      compile_output = `#{compile} #{WORK_DIR} #{CACHE_DIR}`
       
       if $?.success?
         puts compile_output
-        release_output = `#{release_executable} #{WORK_DIR}`
+        release_output = `#{release} #{WORK_DIR}`
         
         if $?.success?
           env_vars << release_output
