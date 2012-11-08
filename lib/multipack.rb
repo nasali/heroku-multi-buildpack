@@ -9,7 +9,7 @@ RELEASES_FILE_NAME = "releases_output.yml"
 
 RELEASES_FILE = File.join(WORK_DIR,RELEASES_FILE_NAME)
 TRIGGER_FILE = File.join(WORK_DIR,TRIGGER_FILE_NAME)
-
+@env_yaml = nil
 def log(message)
   puts "       #{message}"
 end
@@ -19,25 +19,25 @@ def fix_executable_permissions(detect, compile, release)
 end
 
 def parse_release_vars(vars_string)
-  if env_yaml.nil?
-    env_yaml = YAML.load(vars_string)
+  if @env_yaml.nil?
+    @env_yaml = YAML.load(vars_string)
   else
     yaml = YAML.load(vars_string)
-    intersection = env_yaml.merge(yaml).slice(* ( env_yaml.keys & yaml.keys ) )
+    intersection = @env_yaml.merge(yaml).slice(* ( @env_yaml.keys & yaml.keys ) )
     puts "Intersection is #{intersection}"
     intersection.keys.each do |existing_key|
-      env_yaml[existing_key].merge(yaml[existing_key])
+      @env_yaml[existing_key].merge(yaml[existing_key])
     end
     new_vars = yaml.keys - intersection.keys
     new_vars.each do |key|
-      env_yaml[key] = yaml[key]
+      @env_yaml[key] = yaml[key]
     end
-    puts "We made this:\n#{env_yaml.inspect}\n0000"
+    puts "We made this:\n#{@env_yaml.inspect}\n0000"
   end
 end
 def save_release_file
   file = File.new(RELEASES_FILE,'w')
-  YAML.dump(env_yaml, file)
+  YAML.dump(@env_yaml, file)
   file.close  
   puts "Using combined release:\n#{YAML.load(File.read(RELEASES_FILE))}"
 end
