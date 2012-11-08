@@ -3,7 +3,7 @@
 $:.unshift File.expand_path("../../lib", __FILE__)
 require "multipack"
 
-if File.exists? File.join(WORK_DIR,TRIGGER_FILE)
+if File.exists? TRIGGER_FILE
   log "Multi-buildpack"
   exit 0
 else
