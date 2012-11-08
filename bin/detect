@@ -8,9 +8,9 @@ WORK_DIR = ARGV[0]
 TRIGGER_FILE = ARGV[1]
 
 if File.exists? File.join(WORK_DIR, TRIGGER_FILE)
-  Multipack.log "FOUND!"
+  puts "FOUND!"
   exit 0
 else
-  Multipack.log "no"
+  puts "no"
   exit 1
 end
