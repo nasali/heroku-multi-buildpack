@@ -12,17 +12,17 @@ repos.each do |git_repo|
   git_repo.strip!
   name = git_repo.split('/').last
   log "Cloning #{name}"
-  Dir.mkdir(File.join(WORK_DIR,name)) do |dir| 
-    puts "Executing 'git clone #{git_repo} #{dir}'"
-    output = `git clone #{git_repo} #{dir}`
-    result = $?.success?
-    if result
-      log "Detecting"
-      detect = `#{File.join(dir,'bin','detect')} #{WORK_DIR}`
-      puts detect
+  dir = File.join(WORK_DIR,name)
+  FileUtils.mkdir(dir)
+  puts "Executing 'git clone #{git_repo} #{dir}'"
+  output = `git clone #{git_repo} #{dir}`
+  result = $?.success?
+  if result
+    log "Detecting"
+    detect = `#{File.join(dir,'bin','detect')} #{WORK_DIR}`
+    puts detect
     else
-      log "Failed to clone #{git_repo}!"
-      exit 1
-    end
+    log "Failed to clone #{git_repo}!"
+    exit 1
   end
 end
