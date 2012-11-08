@@ -10,8 +10,17 @@ repos = IO.readlines(TRIGGER_FILE)
 
 repos.each do |git_repo|
   name = git_repo.split('/').last
-  log "Building #{name}"
+  log "Cloning #{name}"
   Dir.mktmpdir(name) do |dir| 
-    puts "Process here!"
+    output = `git clone #{git_repo} #{dir}`
+    result = $?.success?
+    if result
+      log "Detecting"
+      detect = `#{File.join(dir,'bin','detect')} #{WORK_DIR}`
+      puts detect
+    else
+      log "Failed to clone #{git_repo}!"
+      exit 1
+    end
   end
 end
