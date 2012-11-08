@@ -7,7 +7,7 @@ puts "checking for #{ARGV[1]} in #{ARGV[0]}"
 WORK_DIR = ARGV[0]
 TRIGGER_FILE = ARGV[1]
 
-if File.exists? File.join(WORK_DIR, TRIGGER_FILE)
+if File.exists? WORK_DIR
   puts "FOUND!"
   exit 0
 else
