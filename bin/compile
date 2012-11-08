@@ -18,7 +18,7 @@ repos.each do |git_repo|
   output = `git clone #{git_repo} #{dir}`
   result = $?.success?
   if result
-    log "Detecting"
+    log "Detecting argument array is actually #{ARGV.inspect}"
     bin_dir = File.join(dir,'bin')
     detect_executable = File.join(bin_dir,'detect')
     compile_executable = File.join(bin_dir,'compile')
@@ -28,7 +28,7 @@ repos.each do |git_repo|
     detect_output = `#{detect_executable} #{WORK_DIR}`
     if $?.success?
       log "Successfully detected #{detect_output}"
-      compile_output = `#{compile_executable} #{WORK_DIR}`
+      compile_output = `#{compile_executable} #{WORK_DIR} #{ARGV[1]}`
       
       if $?.success?
         log "Successfully compiled #{compile_output}"
