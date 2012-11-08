@@ -19,10 +19,31 @@ repos.each do |git_repo|
   result = $?.success?
   if result
     log "Detecting"
-    `chmod +x #{File.join(dir,'bin','detect')}`
-    detect = `#{File.join(dir,'bin','detect')} #{WORK_DIR}`
-    puts detect
-    else
+    bin_dir = File.join(dir,'bin')
+    detect_executable = File.join(bin_dir,'detect')
+    compile_executable = File.join(bin_dir,'compile')
+    release_executable = File.join(bin_dir,'release')
+    
+    `chmod +x #{detect_executable} #{compile_executable} #{release_executable}`
+    detect_output = `#{detect_executable} #{WORK_DIR}`
+    if $?.success?
+      log "Successfully detected #{detect_output}"
+      compile_output = `#{compile_executable} #{WORK_DIR}`
+      
+      if $?.success?
+        log "Successfully compiled #{compile_output}"
+        release_output = `#{release_executable} #{WORK_DIR}`
+        
+        if $?.success?
+          log "Successfully released #{release_output}"
+        else
+          log "Error releasing #{release_output}"
+        end
+      else
+        log "Error compiling #{compile_output}"
+      end
+    end
+  else
     log "Failed to clone #{git_repo}!"
     exit 1
   end
