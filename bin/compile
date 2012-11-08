@@ -2,12 +2,12 @@
 
 $:.unshift File.expand_path("../../lib", __FILE__)
 require 'multipack'
-require 'tmpdir'
 
 log "Processing #{TRIGGER_FILE_NAME}..."
 
 repos = IO.readlines(TRIGGER_FILE)
-
+env_vars = ""
+counter = 0
 repos.each do |git_repo|
   git_repo.strip!
   name = git_repo.split('/').last
@@ -18,26 +18,26 @@ repos.each do |git_repo|
   output = `git clone #{git_repo} #{dir}`
   result = $?.success?
   if result
-    log "Detecting argument array is actually #{ARGV.inspect}"
-    bin_dir = File.join(dir,'bin')
-    detect_executable = File.join(bin_dir,'detect')
-    compile_executable = File.join(bin_dir,'compile')
-    release_executable = File.join(bin_dir,'release')
+    log "Detecting..."
     
-    `chmod +x #{detect_executable} #{compile_executable} #{release_executable}`
+    fix_executable_permissions(dir)
+    
     detect_output = `#{detect_executable} #{WORK_DIR}`
     if $?.success?
-      log "Successfully detected #{detect_output}"
-      compile_output = `#{compile_executable} #{WORK_DIR} #{ARGV[1]}`
+      puts detect_output
+      log "Compiling..."
+      compile_output = `#{compile_executable} #{WORK_DIR} #{CACHE_DIR}`
       
       if $?.success?
-        log "Successfully compiled #{compile_output}"
+        puts compile_output
         release_output = `#{release_executable} #{WORK_DIR}`
         
         if $?.success?
-          log "Successfully released #{release_output}"
+          env_vars << release_output
+          log "Collected release output"
+          counter = counter + 1
         else
-          log "Error releasing #{release_output}"
+          log "Error releasing!"
         end
       else
         log "Error compiling #{compile_output}"
@@ -45,6 +45,12 @@ repos.each do |git_repo|
     end
   else
     log "Failed to clone #{git_repo}!"
-    exit 1
   end
+  
+  exit 1 unless $?.success?
 end
+
+log "Putting releases together..."
+save_release_file(env_vars)
+log "Done compiling all #{counter} buildpacks!"
+exit 0
