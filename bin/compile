@@ -2,5 +2,6 @@
 
 $:.unshift File.expand_path("../../lib", __FILE__)
 require "multipack"
+include Multipack
 
 log "compile #{ARGV[0]} and #{ARGV[1]} here"

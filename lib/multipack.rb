@@ -1,4 +1,4 @@
-class Multipack
+module Multipack
 
   def log message
     puts "      #{message}"
