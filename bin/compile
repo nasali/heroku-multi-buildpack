@@ -1,9 +1,10 @@
 #!/usr/bin/env ruby
 
 $:.unshift File.expand_path("../../lib", __FILE__)
-require "multipack"
+require 'multipack'
+require 'tmpdir'
 
-log "Processing #{TRIGGER_FILE}..."
+log "Processing #{TRIGGER_FILE_NAME}..."
 
 repos = IO.readlines(TRIGGER_FILE)
 
