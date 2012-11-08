@@ -19,9 +19,12 @@ def fix_executable_permissions(detect, compile, release)
 end
 
 def save_release_file(env_vars)
+    puts "Dumping #{env_vars} \nto file"
   file = File.new(RELEASES_FILE,'w')
   YAML.dump(env_vars, file)
   file.close  
+    
+    puts "READING what we just wrote is#{YAML.load(File.read(RELEASES_FILE)).inspect}"
 end
 
 def read_release_file
