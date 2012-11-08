@@ -1,6 +1,6 @@
 module Multipack
 
-  def log message
+  def self.log(message)
     puts "      #{message}"
   end
 end

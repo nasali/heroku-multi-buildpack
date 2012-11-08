@@ -2,16 +2,15 @@
 
 $:.unshift File.expand_path("../../lib", __FILE__)
 require "multipack"
-include ::Multipack
 
 puts "checking for #{ARGV[1]} in #{ARGV[0]}"
 WORK_DIR = ARGV[0]
 TRIGGER_FILE = ARGV[1]
 
 if File.exists? File.join(WORK_DIR, TRIGGER_FILE)
-  log "FOUND!"
+  Multipack.log "FOUND!"
   exit 0
 else
-  log "no"
+  Multipack.log "no"
   exit 1
 end
