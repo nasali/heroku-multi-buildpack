@@ -35,8 +35,8 @@ repos.each do |git_repo|
         release_output = `#{release} #{WORK_DIR}`
         
         if $?.success?
-          env_vars << release_output
           log "Collected release output"
+          parse_release_vars(release_output)
           counter = counter + 1
         else
           log "Error releasing!"
@@ -53,5 +53,5 @@ repos.each do |git_repo|
 end
 
 log "Putting releases together..."
-save_release_file(env_vars)
+save_release_file()
 log "Done compiling all #{counter} buildpacks!"
