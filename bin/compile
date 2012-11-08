@@ -2,7 +2,6 @@
 
 $:.unshift File.expand_path("../../lib", __FILE__)
 require 'multipack'
-require 'io'
 
 log "Processing #{TRIGGER_FILE_NAME}..."
 
