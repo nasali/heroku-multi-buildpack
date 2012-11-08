@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+$:.unshift File.expand_path("../../lib", __FILE__)
+require "language_pack"
+
+if File.exists? ARGV.first
+  puts ARGV.first
+  exit 0
+else
+  puts "no"
+  exit 1
+end
