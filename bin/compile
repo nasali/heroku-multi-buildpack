@@ -3,4 +3,14 @@
 $:.unshift File.expand_path("../../lib", __FILE__)
 require "multipack"
 
-log "process .buildpacks from #{ARGV[0]}  here"
+log "Processing #{TRIGGER_FILE}..."
+
+repos = IO.readlines(TRIGGER_FILE)
+
+repos.each do |git_repo|
+  name = git_repo.split('/').last
+  log "Building #{name}"
+  Dir.mktmpdir(name) do |dir| 
+    puts "Process here!"
+  end
+end
