@@ -14,12 +14,8 @@ def log(message)
   puts "       #{message}"
 end
 
-def fix_executable_permissions(dir)
-  bin_dir = File.join(dir,'bin')
-  detect_executable = File.join(bin_dir,'detect')
-  compile_executable = File.join(bin_dir,'compile')
-  release_executable = File.join(bin_dir,'release')
-  `chmod +x #{detect_executable} #{compile_executable} #{release_executable}`
+def fix_executable_permissions(detect, compile, release)  
+  `chmod +x #{detect} #{compile} #{release}`
 end
 
 def save_release_file(env_vars)

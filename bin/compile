@@ -14,14 +14,16 @@ repos.each do |git_repo|
   log "Cloning #{name}"
   dir = File.join(WORK_DIR,name)
   FileUtils.mkdir(dir)
-  puts "Executing 'git clone #{git_repo} #{dir}'"
   output = `git clone #{git_repo} #{dir}`
-  result = $?.success?
-  if result
-    log "Detecting..."
-    
-    fix_executable_permissions(dir)
-    
+  if $?.success?
+
+    bin_dir = File.join(dir,'bin')
+    detect = File.join(bin_dir,'detect')
+    compile = File.join(bin_dir,'compile')
+    release = File.join(bin_dir,'release')
+    fix_executable_permissions(detect,compile,release)
+
+    log "Detecting..."    
     detect_output = `#{detect_executable} #{WORK_DIR}`
     if $?.success?
       puts detect_output
