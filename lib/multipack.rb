@@ -23,15 +23,7 @@ def parse_release_vars(vars_string)
     @env_yaml = YAML.load(vars_string)
   else
     yaml = YAML.load(vars_string)
-    intersection = @env_yaml.merge(yaml).slice(* ( @env_yaml.keys & yaml.keys ) )
-    puts "Intersection is #{intersection}"
-    intersection.keys.each do |existing_key|
-      @env_yaml[existing_key].merge(yaml[existing_key])
-    end
-    new_vars = yaml.keys - intersection.keys
-    new_vars.each do |key|
-      @env_yaml[key] = yaml[key]
-    end
+    @env_yaml.merge!(yaml){|key, old_value, new_value| old_value.merge(new_value) }
     puts "We made this:\n#{@env_yaml.inspect}\n0000"
   end
 end
