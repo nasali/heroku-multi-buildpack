@@ -55,4 +55,3 @@ end
 log "Putting releases together..."
 save_release_file(env_vars)
 log "Done compiling all #{counter} buildpacks!"
-exit 0
