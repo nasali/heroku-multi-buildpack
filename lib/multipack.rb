@@ -23,7 +23,11 @@ def parse_release_vars(vars_string)
     @env_yaml = YAML.load(vars_string)
   else
     yaml = YAML.load(vars_string)
-    @env_yaml.merge!(yaml){|key, old_value, new_value| old_value.merge(new_value) }
+    @env_yaml.merge!(yaml) do |key, old_value, new_value| 
+      old_value.merge!(new_value) do |sub_key, sub_old_value, sub_new_value| 
+        sub_old_value.merge!(sub_new_value)
+      end
+    end
     puts "We made this:\n#{@env_yaml.inspect}\n0000"
   end
 end
