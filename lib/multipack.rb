@@ -31,9 +31,9 @@ def save_release_file
   file = File.new(RELEASES_FILE,'w')
   YAML.dump(@env_yaml, file)
   file.close  
-  puts "Using combined release:\n#{YAML.load(File.read(RELEASES_FILE))}"
+  puts "Using combined release:\n#{File.read(RELEASES_FILE)}"
 end
 
 def read_release_file
-  YAML.load(File.read(RELEASES_FILE))
+  File.read(RELEASES_FILE)
 end
