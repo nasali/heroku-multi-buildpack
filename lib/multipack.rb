@@ -25,7 +25,15 @@ def parse_release_vars(vars_string)
     yaml = YAML.load(vars_string)
     @env_yaml.merge!(yaml) do |key, old_value, new_value| 
       old_value.merge!(new_value) do |sub_key, sub_old_value, sub_new_value| 
-        sub_old_value.merge!(sub_new_value)
+        if sub_old_value.kind_of? Hash
+          sub_old_value.merge!(sub_new_value)
+        elsif sub_old_value.kind_of? Array
+          sub_old_value << sub_new_value 
+        elsif sub_old_value.kind_of? String
+          sub_old_value << ":#{sub_new_value}"
+        else
+          raise "I do not know what to do with #{sub_old_value}"
+        end
       end
     end
     puts "We made this:\n#{@env_yaml.inspect}\n0000"
