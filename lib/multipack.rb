@@ -46,14 +46,13 @@ def parse_release_vars(vars_string)
         raise "I do not know what to do with #{old_value}"
       end
     end
-    puts "We made this:\n#{@env_yaml.inspect}\n0000"
   end
 end
 def save_release_file
   file = File.new(RELEASES_FILE,'w')
   YAML.dump(@env_yaml, file)
   file.close  
-  puts "Using combined release:\n#{File.read(RELEASES_FILE)}"
+  log "Using combined release:\n#{File.read(RELEASES_FILE)}"
 end
 
 def read_release_file
