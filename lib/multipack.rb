@@ -2,8 +2,8 @@ require 'yaml'
 require 'fileutils'
 require 'tmpdir'
 
-WORK_DIR = File.expand_path ARGV[0]
-CACHE_DIR = File.expand_path ARGV[1]
+WORK_DIR =  ARGV[0]
+CACHE_DIR = ARGV[1]
 
 TRIGGER_FILE_NAME = ".buildpacks"
 RELEASES_FILE_NAME = "releases_output.yml"
