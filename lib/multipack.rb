@@ -1,6 +1,6 @@
 require 'yaml'
 require 'fileutils'
-
+require 'tmpdir'
 WORK_DIR = ARGV[0]
 CACHE_DIR = ARGV[1]
 
