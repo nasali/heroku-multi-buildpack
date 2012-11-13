@@ -16,7 +16,7 @@ repos.each do |git_repo|
   FileUtils.mkdir(dir)
   output = `git clone #{git_repo} #{dir}`
   if $?.success?
-
+    Dir.chdir dir
     bin_dir = File.join(dir,'bin')
     detect = File.join(bin_dir,'detect')
     compile = File.join(bin_dir,'compile')
