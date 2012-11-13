@@ -1,6 +1,7 @@
 require 'yaml'
 require 'fileutils'
 require 'tmpdir'
+require 'pathname'
 WORK_DIR = File.realdirpath ARGV[0]
 CACHE_DIR = File.realdirpath ARGV[1]
 
