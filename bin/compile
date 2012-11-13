@@ -12,8 +12,8 @@ repos.each do |git_repo|
   git_repo.strip!
   name = git_repo.split('/').last
   log "Cloning #{name}"
-  dir = File.join(WORK_DIR,name)
-  FileUtils.mkdir(dir)
+  #dir = File.join(WORK_DIR,name)
+  dir = Dir.mktmpdir
   output = `git clone #{git_repo} #{dir}`
   if $?.success?
     Dir.chdir dir
@@ -45,6 +45,7 @@ repos.each do |git_repo|
         log "Error compiling #{compile_output}"
       end
     end
+    FileUtils.remove_entry_secure dir
   else
     log "Failed to clone #{git_repo}!"
   end
