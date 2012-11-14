@@ -63,7 +63,7 @@ log "Running: rake assets:precompile"
 require 'benchmark'
 time = Benchmark.realtime {
   output = ""
-    IO.popen("vendor/bundle/ruby/1.9.1/bin/bundle exec rake assets:precompile 2>&1") do |io|
+    IO.popen("/app/vendor/bundle/ruby/1.9.1/bin/bundle exec rake assets:precompile 2>&1") do |io|
       until io.eof?
         buffer = io.gets
         output << buffer
