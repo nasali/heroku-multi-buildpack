@@ -10,6 +10,7 @@ env_vars = ""
 counter = 0
 repos.each do |git_repo|
   git_repo.strip!
+  next if git_repo.empty?
   name = git_repo.split('/').last
   log "Cloning #{name}"
   dir = Dir.mktmpdir
