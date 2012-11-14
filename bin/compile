@@ -36,10 +36,7 @@ repos.each do |git_repo|
         puts compile_output
 
         #Test for now
-        if detect_output == 'FreeTDS ODBC'
-          ENV['freetds-dir'] = "#{dir}/vendor/freetds"
-          puts "Set freetds-dir"
-        end
+        ENV['freetds-dir'] = "#{WORK_DIR}/vendor/freetds"
 
         release_output = `#{release} #{WORK_DIR}`
         
