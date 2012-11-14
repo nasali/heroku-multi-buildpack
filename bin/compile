@@ -40,6 +40,11 @@ repos.each do |git_repo|
           log "Collected release output"
           parse_release_vars(release_output)
           counter = counter + 1
+          #Test for now
+          if detect_output == 'FreeTDS ODBC'
+            ENV['freetds-dir'] = "#{dir}/vendor/freetds"
+            puts "Set freetds-dir"
+          end
         else
           log "Error releasing!"
         end
