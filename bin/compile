@@ -60,18 +60,7 @@ FileUtils.mkdir_p('public')
 ENV["RAILS_GROUPS"] ||= "assets"
 ENV["RAILS_ENV"]    ||= "production"
 log "Running: rake assets:precompile"
-require 'benchmark'
-time = Benchmark.realtime {
-  output = ""
-    IO.popen("/app/vendor/bundle/ruby/1.9.1/bin/bundle exec rake assets:precompile 2>&1") do |io|
-      until io.eof?
-        buffer = io.gets
-        output << buffer
-        puts buffer
-      end
-    end
-  output
-}
+
 if $?.success?
   log "Asset precompilation completed (#{"%.2f" % time}s)"
 else
