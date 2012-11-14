@@ -61,7 +61,17 @@ ENV["RAILS_GROUPS"] ||= "assets"
 ENV["RAILS_ENV"]    ||= "production"
 log "Running: rake assets:precompile"
 require 'benchmark'
-time = Benchmark.realtime { pipe("env PATH=$PATH:bin bundle exec rake assets:precompile 2>&1") }
+time = Benchmark.realtime {
+  output = ""
+    IO.popen("env PATH=$PATH:bin bundle exec rake assets:precompile 2>&1") do |io|
+      until io.eof?
+        buffer = io.gets
+        output << buffer
+        puts buffer
+      end
+    end
+  output
+}
 if $?.success?
   log "Asset precompilation completed (#{"%.2f" % time}s)"
 else
