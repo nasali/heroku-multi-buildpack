@@ -30,7 +30,7 @@ repos.each do |git_repo|
     if $?.success?
       puts detect_output
       log "Compiling..."
-      compile_output = `#{compile} #{WORK_DIR} #{CACHE_DIR} --with-freetds-dir=#{WORK_DIR}/vendor/freetds`
+      compile_output = `#{compile} #{WORK_DIR} #{CACHE_DIR} `
       
       if $?.success?
         puts compile_output
