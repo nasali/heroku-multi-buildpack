@@ -15,6 +15,18 @@ def log(message)
   puts "       #{message}"
 end
 
+def run_command(command)
+  result = ""
+  IO.popen(command) do |io|
+    until io.eof?
+      buffer = io.gets
+      result << buffer
+      puts buffer
+    end
+  end
+  result
+end
+
 def fix_executable_permissions(detect, compile, release)  
   `chmod +x #{detect} #{compile} #{release}`
 end
