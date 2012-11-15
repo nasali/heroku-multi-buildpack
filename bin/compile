@@ -33,7 +33,7 @@ repos.each do |git_repo|
       compile_output = run_command "#{compile} #{WORK_DIR} #{CACHE_DIR} "
       
       if $?.success?
-        puts compile_output
+        log "Compiled successfully. Invoking release..."
 
         release_output = run_command "#{release} #{WORK_DIR}"
         
@@ -55,21 +55,6 @@ repos.each do |git_repo|
   exit 1 unless $?.success?
 end
 
-#This tries to precompile assets
-FileUtils.mkdir_p('public')
-ENV["RAILS_GROUPS"] ||= "assets"
-ENV["RAILS_ENV"]    ||= "production"
-log "Running: rake assets:precompile"
-require 'benchmark'
-time = Benchmark.realtime {
-  output = run_command "/app/vendor/bundle/ruby/1.9.1/bin/bundle exec rake assets:precompile 2>&1"
-}
-if $?.success?
-  log "Asset precompilation completed (#{"%.2f" % time}s)"
-else
-  log "Asset precompilation failed!"
-end
-
 log "Putting releases together..."
 save_release_file()
-log "Done compiling all #{counter} buildpacks!"
+puts "======> Done compiling all #{counter} buildpack(s)!"
