@@ -56,4 +56,8 @@ end
 
 log "Putting releases together..."
 save_release_file()
-puts "======> Done compiling all #{counter} buildpack(s)!"
+if counter > 1
+  puts "=====> Done compiling all #{counter} buildpacks!"
+else
+  puts "=====> Done compiling buildpack!"
+end
