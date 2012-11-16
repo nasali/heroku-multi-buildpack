@@ -28,7 +28,6 @@ repos.each do |git_repo|
     log "Detecting..."    
     detect_output = run_command "#{detect} #{WORK_DIR}"
     if $?.success?
-      puts detect_output
       log "Compiling..."
       compile_output = run_command "#{compile} #{WORK_DIR} #{CACHE_DIR} "
       
