@@ -32,9 +32,9 @@ repos.each do |git_repo|
       compile_output = run_command "#{compile} #{WORK_DIR} #{CACHE_DIR} "
       
       if $?.success?
-        puts "COMPILE OUTPUT IS \n\n#{compile_output.inspect}\n\n"
         log "Compiled successfully. Invoking release..."
-
+        env_output = run_command "env PATH=$PATH:bin"
+        log "Env output was #{env_output}"
         release_output = run_command "#{release} #{WORK_DIR} #{CACHE_DIR} "
         
         if $?.success?
