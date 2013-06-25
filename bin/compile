@@ -34,9 +34,9 @@ repos.each do |git_repo|
       if $?.success?
         if detect_output.start_with? 'Ruby/Rails'
           
-          run_command "curl https://s3.amazonaws.com/chameleon-heroku-assets/bundler-1.3.2.tar.gz -s -o - | tar xzf -"
+          run_command "gem install bundler"
           log "Running: rake assets:precompile"
-          precompile_output = run_command "bundler-1.3.2/bin/bundle exec rake assets:precompile 2>&1"
+          precompile_output = run_command "bundle exec rake assets:precompile 2>&1"
           log precompile_output
         end
         
