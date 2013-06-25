@@ -24,6 +24,7 @@ repos.each do |git_repo|
     compile = File.join(bin_dir,'compile')
     release = File.join(bin_dir,'release')
     fix_executable_permissions(detect,compile,release)
+    ENV["PATH"] = "/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:bin"
     log "PATH is #{ENV["PATH"].inspect}"
     log "Detecting..."    
     detect_output = run_command "#{detect} #{WORK_DIR}"
