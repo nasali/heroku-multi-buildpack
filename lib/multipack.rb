@@ -12,6 +12,9 @@ RELEASES_FILE_NAME = "releases_output.yml"
 RELEASES_FILE = File.join(WORK_DIR,RELEASES_FILE_NAME)
 TRIGGER_FILE = File.join(WORK_DIR,TRIGGER_FILE_NAME)
 @env_yaml = nil
+
+ENV['PATH']="bin:/usr/local/bin:/usr/bin:/bin"
+
 def log(message)
   puts "       #{message}"
 end
