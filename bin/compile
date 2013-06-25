@@ -47,6 +47,13 @@ repos.each do |git_repo|
           log "Collected release output"
           latest_vars = parse_release_vars(release_output)
           log "Latest release vars are #{latest_vars.inspect}"
+          unless latest_vars["config_vars"].nil?
+            latest_vars["config_vars"].each do |key, value|
+              log "Setting ENV[#{key.inspect}] to #{value.inspect}"
+              ENV[key] = value
+            end
+          end
+          
           counter = counter + 1
         else
           log "Error releasing!"
