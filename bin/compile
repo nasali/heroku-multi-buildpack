@@ -46,7 +46,7 @@ repos.each do |git_repo|
         if $?.success?
           log "Collected release output"
           latest_vars = parse_release_vars(release_output)
-          logs "Latest release vars are #{latest_vars.inspect}"
+          log "Latest release vars are #{latest_vars.inspect}"
           counter = counter + 1
         else
           log "Error releasing!"
