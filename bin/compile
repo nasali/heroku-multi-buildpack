@@ -33,9 +33,7 @@ repos.each do |git_repo|
       
       if $?.success?
         if detect_output.start_with? 'Ruby/Rails'
-          Encoding.default_external = Encoding::UTF_8
-          Encoding.default_internal = Encoding::UTF_8
-  
+          run command "export LANGUAGE=en_US.UTF-8 && export LANG=en_US.UTF-8 && export LC_ALL=en_US.UTF-8"
           run_command "gem install bundler"
           log "Running: rake assets:precompile"
           precompile_output = run_command "bundle exec rake assets:precompile 2>&1"
