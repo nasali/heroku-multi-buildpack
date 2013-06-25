@@ -34,12 +34,7 @@ repos.each do |git_repo|
       if $?.success?
         if detect_output.start_with? 'Ruby/Rails'
           log "Running: rake assets:precompile"
-          run_command "export PATH=$PATH:bin"
-          log run_command "which bundle"
-          run_command "echo $PATH"
-          run_command "ls -alh ./bin"
-          run_command "ls -alh ./vendor"
-          precompile_output = run_command "./vendor/bundle/bin/rake assets:precompile 2>&1"
+          precompile_output = run_command "env PATH=$PATH:bin bundle exec rake assets:precompile 2>&1"
           log precompile_output
         end
         
