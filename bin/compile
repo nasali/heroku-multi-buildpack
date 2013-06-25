@@ -36,6 +36,9 @@ repos.each do |git_repo|
           log "Running: rake assets:precompile"
           precompile_output = run_command "env PATH=$PATH:bin bundle exec rake assets:precompile 2>&1"
           log precompile_output
+        else
+          puts "Detect output was #{detect_output.inspect}"
+          
         end
         
         log "Compiled successfully. Invoking release..."
