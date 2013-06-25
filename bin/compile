@@ -40,7 +40,7 @@ repos.each do |git_repo|
           bundler_path   = "./#{slug_vendor_base}/gems/#{bundler_version}/lib"
           log run_command "curl https://s3.amazonaws.com/heroku-buildpack-ruby/#{bundler_version}.tgz -s -o - | tar xzf -
 "
-          run_command "ls -alh . "
+
           precompile_output = run_command "env PATH=#{spath}:#{bundler_path}/bin bundle exec rake assets:precompile 2>&1"
           log precompile_output
         end
