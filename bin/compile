@@ -4,6 +4,7 @@ $stdout.sync = true
 
 $:.unshift File.expand_path("../../lib", __FILE__)
 require 'multipack'
+require 'mkmf'
 
 log "Processing #{TRIGGER_FILE_NAME}..."
 
@@ -43,7 +44,11 @@ repos.each do |git_repo|
           
           unless latest_vars["config_vars"].nil?
             latest_vars["config_vars"].each do |key, value|
-              unless ENV[key] == value
+              if key.start_with? "RBCONFIG_"
+                rbconfig_var_name = key.sub('RBCONFIG_','').downcase 
+                log "Setting RbConfig::CONFIG[#{rbconfig_var_name.inspect}] to #{value.inspect}"
+                RbConfig::CONFIG[rbconfig_var_name] = "#{RbConfig::CONFIG[rbconfig_var_name]}:#{value.to_s}"
+              elsif ENV[key] != value
                 log "Setting ENV[#{key.inspect}] to #{value.inspect}"
                 ENV[key] = value
               end
