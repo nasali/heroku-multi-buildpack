@@ -44,8 +44,13 @@ repos.each do |git_repo|
           unless latest_vars["config_vars"].nil?
             latest_vars["config_vars"].each do |key, value|
               if ENV[key] != value
-                log "Setting ENV[#{key.inspect}] to #{value.inspect}"
-                ENV[key] = value
+                if ENV[key].nil? || Env[key].empty?
+                  log "Setting ENV[#{key.inspect}] to #{value.inspect}"
+                  ENV[key] = value
+                else
+                  log "Appending #{value.inspect} to ENV[#{key.inspect}]"
+                  ENV[key] = "#{ENV[key]}:#{value}"
+                end
               end
             end
           end
