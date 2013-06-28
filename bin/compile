@@ -9,7 +9,7 @@ require 'multipack'
 log "Processing #{TRIGGER_FILE_NAME}..."
 
 repos = IO.readlines(TRIGGER_FILE)
-ENV["PATH"]="/usr/local/bin:/usr/bin:/bin"
+ENV["PATH"]="/usr/local/bin:/usr/bin:/bin:bin"
 env_vars = ""
 counter = 0
 repos.each do |git_repo|
