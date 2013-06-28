@@ -9,6 +9,7 @@ require 'multipack'
 log "Processing #{TRIGGER_FILE_NAME}..."
 
 repos = IO.readlines(TRIGGER_FILE)
+ENV["PATH"]="/usr/local/bin:/usr/bin:/bin"
 env_vars = ""
 counter = 0
 repos.each do |git_repo|
@@ -25,8 +26,6 @@ repos.each do |git_repo|
     compile = File.join(bin_dir,'compile')
     release = File.join(bin_dir,'release')
     fix_executable_permissions(detect,compile,release)
-    #log "PATH is #{ENV["PATH"].inspect}"
-    #log "LD_LIBRARY_PATH is #{ENV["LD_LIBRARY_PATH"].inspect}"
     log "Detecting..."    
     detect_output = run_command "#{detect} #{WORK_DIR}"
     if $?.success?
