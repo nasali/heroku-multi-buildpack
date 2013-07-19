@@ -21,7 +21,7 @@ repos.each do |git_repo|
   output = run_command "git clone #{git_repo} #{dir} >/dev/null 2>&1 "
   if $?.success?
     Dir.chdir dir
-    `ls -alh`
+    puts `ls -alh`
     bin_dir = File.join(dir,'bin')
     detect = File.join(bin_dir,'detect')
     compile = File.join(bin_dir,'compile')
