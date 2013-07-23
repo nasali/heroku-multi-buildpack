@@ -34,7 +34,8 @@ repos.each do |git_repo|
     puts `ls -alh`
     if tag
       log "Checking out #{tag}"
-      output = run_command "git checkout #{tag} >/dev/null 2>&1 "
+      output = run_command "git fetch origin"
+      output = run_command "git checkout #{tag}" #" >/dev/null 2>&1 "
       puts output
       raise "ERROR! #{output}" unless $?.success?
     end
