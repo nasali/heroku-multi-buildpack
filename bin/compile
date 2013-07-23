@@ -22,6 +22,7 @@ repos.each do |git_repo|
     repo_and_tag = git_repo.split('#')
     git_repo = repo_and_tag.first
     tag = repo_and_tag.last
+    name = name.split('#').first
   end
   
   log "Cloning #{name} repo: #{git_repo} tag: #{tag}"
@@ -29,7 +30,7 @@ repos.each do |git_repo|
   output = run_command "git clone #{git_repo} #{dir} >/dev/null 2>&1 "
   if $?.success?
     Dir.chdir dir
-    
+    puts `ls -alh`
     if tag
       log "Checking out #{tag}"
       output = run_command "git fetch origin && git checkout #{tag} >/dev/null 2>&1 "
