@@ -14,6 +14,7 @@ env_vars = ""
 counter = 0
 
 GIT_DIR_BACKUP = ENV['GIT_DIR']
+ENV['GIT_DIR'] = nil #Yank out
 
 repos.each do |git_repo|
   git_repo.strip!
@@ -28,26 +29,19 @@ repos.each do |git_repo|
     name = name.split('#').first
   end
   
-  log "Cloning #{name} repo: #{git_repo} tag: #{tag}"
+  log "Cloning #{name}"
   dir = Dir.mktmpdir
-  log "Made directory #{dir}"
-  ENV['GIT_DIR'] = nil
-  puts `pwd && ls -alh`
-  output = `git clone #{git_repo} #{dir} >/dev/null 2>&1 `
+  output = run_command "git clone #{git_repo} #{dir} >/dev/null 2>&1 "
   if $?.success?
     Dir.chdir dir
-    puts `pwd`
-    puts `ls -alh . `
+    
     if tag
       log "Checking out #{tag}"
-      output = `git fetch origin`
-      puts "fetch: #{output}"
-      output = `git checkout #{tag}` #" >/dev/null 2>&1 "
-      puts "checkout: #{output}"
-      raise "ERROR! #{output}" unless $?.success?
+      output = run_command "git fetch origin >/dev/null 2>&1 "
+      raise "Error fetching! #{output}" unless $?.success?
+      output = run_command "git checkout #{tag} >/dev/null 2>&1 "
+      raise "Error checking out! #{output}" unless $?.success?
     end
-    
-    puts `ls -alh`
     
     bin_dir = File.join(dir,'bin')
     detect = File.join(bin_dir,'detect')
@@ -102,3 +96,5 @@ if counter > 1
 else
   puts "=====> Done compiling buildpack!"
 end
+
+ENV['GIT_DIR'] = GIT_DIR_BACKUP #Restore
