@@ -34,11 +34,14 @@ repos.each do |git_repo|
     puts `ls -alh`
     if tag
       log "Checking out #{tag}"
-      output = run_command "git fetch origin"
-      output = run_command "git checkout #{tag}" #" >/dev/null 2>&1 "
-      puts output
+      output = run_command "git --work-tree=#{dir} fetch origin"
+      puts "fetch: #{output}"
+      output = run_command "git --work-tree=#{dir} checkout #{tag}" #" >/dev/null 2>&1 "
+      puts "checkout: #{output}"
       raise "ERROR! #{output}" unless $?.success?
     end
+    
+    puts `ls -alh`
     
     bin_dir = File.join(dir,'bin')
     detect = File.join(bin_dir,'detect')
