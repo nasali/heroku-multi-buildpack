@@ -18,10 +18,10 @@ repos.each do |git_repo|
   name = git_repo.split('/').last
   tag = nil
   
-  if hash = name.index('#')
+  if name.include?('#')
     repo_and_tag = git_repo.split('#')
     git_repo = repo_and_tag.first
-    tag = git_repo.last
+    tag = repo_and_tag.last
   end
   
   log "Cloning #{name}"
