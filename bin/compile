@@ -30,13 +30,13 @@ repos.each do |git_repo|
   Dir.chdir dir
   output = run_command "git clone #{git_repo} #{dir} >/dev/null 2>&1 "
   if $?.success?
-    puts `pwd`
+    puts `cd #{dir}`
     puts `ls -alh`
     if tag
       log "Checking out #{tag}"
-      output = run_command "git --work-tree=#{dir} fetch origin"
+      output = run_command "git fetch origin"
       puts "fetch: #{output}"
-      output = run_command "git --work-tree=#{dir} checkout #{tag}" #" >/dev/null 2>&1 "
+      output = run_command "git checkout #{tag}" #" >/dev/null 2>&1 "
       puts "checkout: #{output}"
       raise "ERROR! #{output}" unless $?.success?
     end
