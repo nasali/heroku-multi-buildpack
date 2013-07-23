@@ -28,10 +28,9 @@ repos.each do |git_repo|
   log "Cloning #{name} repo: #{git_repo} tag: #{tag}"
   dir = Dir.mktmpdir
   Dir.chdir dir
-  puts `ls -alh`
   output = run_command "git clone #{git_repo} #{dir} >/dev/null 2>&1 "
   if $?.success?
-    puts run_command "cd #{dir}/#{name.chomp('.git')}"
+    puts `pwd`
     puts `ls -alh`
     if tag
       log "Checking out #{tag}"
