@@ -12,6 +12,9 @@ repos = IO.readlines(TRIGGER_FILE)
 
 env_vars = ""
 counter = 0
+
+GIT_DIR_BACKUP = ENV['GIT_DIR']
+
 repos.each do |git_repo|
   git_repo.strip!
   next if git_repo.empty?
@@ -26,13 +29,13 @@ repos.each do |git_repo|
   end
   
   log "Cloning #{name} repo: #{git_repo} tag: #{tag}"
-  dir = File.join(WORK_DIR,name)
-  puts `mkdir #{dir}`
+  dir = Dir.mktmpdir
   log "Made directory #{dir}"
-  puts `cd #{dir}`
+  ENV['GIT_DIR'] = nil
   puts `pwd && ls -alh`
   output = `git clone #{git_repo} #{dir} >/dev/null 2>&1 `
   if $?.success?
+    Dir.chdir dir
     puts `pwd`
     puts `ls -alh . `
     if tag
