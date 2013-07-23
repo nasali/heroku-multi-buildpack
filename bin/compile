@@ -26,7 +26,7 @@ repos.each do |git_repo|
   end
   
   log "Cloning #{name} repo: #{git_repo} tag: #{tag}"
-  dir = Dir.mkdir
+  dir = Dir.mktmpdir
   Dir.chdir dir
   puts `ls -alh`
   output = run_command "git clone #{git_repo} >/dev/null 2>&1 "
