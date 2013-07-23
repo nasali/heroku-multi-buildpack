@@ -26,9 +26,11 @@ repos.each do |git_repo|
   end
   
   log "Cloning #{name} repo: #{git_repo} tag: #{tag}"
-  dir = Dir.mkdir File.join(WORK_DIR,name)
-  log "Made temp directory #{dir}"
+  dir = File.join(WORK_DIR,name)
+  puts `mkdir #{dir}`
+  log "Made directory #{dir}"
   puts `cd #{dir}`
+  puts `pwd && ls -alh`
   output = `git clone #{git_repo} #{dir} >/dev/null 2>&1 `
   if $?.success?
     puts `pwd`
