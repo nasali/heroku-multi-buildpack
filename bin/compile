@@ -9,7 +9,7 @@ require 'multipack'
 log "Processing #{TRIGGER_FILE_NAME}..."
 
 repos = IO.readlines(TRIGGER_FILE)
-ENV["PATH"]="/usr/local/bin:/usr/bin:/bin:bin"
+
 env_vars = ""
 counter = 0
 repos.each do |git_repo|
@@ -27,11 +27,14 @@ repos.each do |git_repo|
   
   log "Cloning #{name} repo: #{git_repo} tag: #{tag}"
   dir = Dir.mktmpdir
+  log "Made temp directory #{dir}"
+  puts `pwd`
+  puts `ls -alh . `
   puts `cd #{dir}`
-  output = `git clone #{git_repo} . >/dev/null 2>&1 `
+  output = `git clone #{git_repo} #{dir} >/dev/null 2>&1 `
   if $?.success?
     puts `pwd`
-    puts `ls -alh`
+    puts `ls -alh . `
     if tag
       log "Checking out #{tag}"
       output = `git fetch origin`
