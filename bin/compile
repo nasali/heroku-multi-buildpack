@@ -26,12 +26,12 @@ repos.each do |git_repo|
   end
   
   log "Cloning #{name} repo: #{git_repo} tag: #{tag}"
-  dir = "/tmp/multibuildpack/#{dir}"
-  run_command "mkdir -p #{dir}"
-  run_command "cd #{dir}"
+  dir = Dir.mkdir
+  Dir.chdir dir
   puts `ls -alh`
   output = run_command "git clone #{git_repo} >/dev/null 2>&1 "
   if $?.success?
+    puts `ls -alh`
     if tag
       log "Checking out #{tag}"
       output = run_command "git fetch origin && git checkout #{tag} >/dev/null 2>&1 "
