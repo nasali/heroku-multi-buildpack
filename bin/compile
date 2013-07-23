@@ -24,7 +24,7 @@ repos.each do |git_repo|
     tag = repo_and_tag.last
   end
   
-  log "Cloning #{name}"
+  log "Cloning #{name} repo: #{git_repo} tag: #{tag}"
   dir = Dir.mktmpdir
   output = run_command "git clone #{git_repo} #{dir} >/dev/null 2>&1 "
   if $?.success?
