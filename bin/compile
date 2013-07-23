@@ -16,16 +16,33 @@ repos.each do |git_repo|
   git_repo.strip!
   next if git_repo.empty?
   name = git_repo.split('/').last
+  tag = nil
+  
+  if hash = name.index('#')
+    repo_and_tag = git_repo.split('#')
+    git_repo = repo_and_tag.first
+    tag = git_repo.last
+  end
+  
   log "Cloning #{name}"
   dir = Dir.mktmpdir
   output = run_command "git clone #{git_repo} #{dir} >/dev/null 2>&1 "
   if $?.success?
     Dir.chdir dir
+    
+    if tag
+      log "Checking out #{tag}"
+      output = run_command "git checkout #{tag} >/dev/null 2>&1 "
+      raise "ERROR! #{$?}" unless $?.success?
+    end
+    
     bin_dir = File.join(dir,'bin')
     detect = File.join(bin_dir,'detect')
     compile = File.join(bin_dir,'compile')
     release = File.join(bin_dir,'release')
+    
     fix_executable_permissions(detect,compile,release)
+    
     log "Detecting..."    
     detect_output = run_command "#{detect} #{WORK_DIR}"
     if $?.success?
