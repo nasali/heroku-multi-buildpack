@@ -31,6 +31,7 @@ repos.each do |git_repo|
   puts `ls -alh`
   output = run_command "git clone #{git_repo} >/dev/null 2>&1 "
   if $?.success?
+    puts run_command "cd #{name.chomp('.git')}"
     puts `ls -alh`
     if tag
       log "Checking out #{tag}"
