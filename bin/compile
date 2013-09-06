@@ -9,23 +9,47 @@ require 'multipack'
 log "Processing #{TRIGGER_FILE_NAME}..."
 
 repos = IO.readlines(TRIGGER_FILE)
-ENV["PATH"]="/usr/local/bin:/usr/bin:/bin:bin"
+
 env_vars = ""
 counter = 0
+
+GIT_DIR_BACKUP = ENV['GIT_DIR']
+ENV['GIT_DIR'] = nil #Yank out
+
 repos.each do |git_repo|
   git_repo.strip!
   next if git_repo.empty?
   name = git_repo.split('/').last
+  tag = nil
+  
+  if name.include?('#')
+    repo_and_tag = git_repo.split('#')
+    git_repo = repo_and_tag.first
+    tag = repo_and_tag.last
+    name = name.split('#').first
+  end
+  
   log "Cloning #{name}"
   dir = Dir.mktmpdir
   output = run_command "git clone #{git_repo} #{dir} >/dev/null 2>&1 "
   if $?.success?
     Dir.chdir dir
+    
+    if tag
+      log "Checking out #{tag}"
+      output = run_command "git fetch origin >/dev/null 2>&1 "
+      raise "Error fetching! #{output}" unless $?.success?
+      output = run_command "git checkout #{tag} >/dev/null 2>&1 "
+      raise "Error checking out! #{output}" unless $?.success?
+    end
+    
     bin_dir = File.join(dir,'bin')
     detect = File.join(bin_dir,'detect')
     compile = File.join(bin_dir,'compile')
     release = File.join(bin_dir,'release')
+    
     fix_executable_permissions(detect,compile,release)
+    
     log "Detecting..."    
     detect_output = run_command "#{detect} #{WORK_DIR}"
     if $?.success?
@@ -72,3 +96,5 @@ if counter > 1
 else
   puts "=====> Done compiling buildpack!"
 end
+
+ENV['GIT_DIR'] = GIT_DIR_BACKUP #Restore
