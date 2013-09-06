@@ -9,5 +9,5 @@ random_string = SecureRandom.hex
 
 puts <<-CONF
 config_vars:
-  LD_LIBRARY_PATH: #{random_string}
+  LD_LIBRARY_PATH: CRAZY:STUFF
 CONF
