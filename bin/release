@@ -3,4 +3,11 @@
 $:.unshift File.expand_path("../../lib", __FILE__)
 require 'multipack'
 
-puts read_release_file
+#puts read_release_file
+require 'securerandom'
+random_string = SecureRandom.hex
+
+puts <<-CONF
+config_vars:
+  LD_LIBRARY_PATH: #{random_string}
+CONF
