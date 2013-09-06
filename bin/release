@@ -9,5 +9,6 @@ random_string = SecureRandom.hex
 
 puts <<-CONF
 config_vars:
-  SOME_OTHER_VAR_KEY: CRAZYSTUFF
+  SOME_OTHER_VAR_KEY: ORCRAZY
+  NEW_CRAZY_KEY: VARUE
 CONF
