@@ -8,9 +8,12 @@ CACHE_DIR = ARGV[1]
 
 TRIGGER_FILE_NAME = ".buildpacks"
 RELEASES_FILE_NAME = "releases_output.yml"
+CONFIG_FILE_NAME = ".bashrc"
 
 RELEASES_FILE = File.join(WORK_DIR,RELEASES_FILE_NAME)
 TRIGGER_FILE = File.join(WORK_DIR,TRIGGER_FILE_NAME)
+CONFIG_FILE = File.join(WORK_DIR,CONFIG_FILE_NAME)
+
 @env_yaml = nil
 
 ENV["PATH"]="/usr/local/bin:/usr/bin:/bin:bin"
@@ -74,4 +77,10 @@ end
 
 def read_release_file
   File.read(RELEASES_FILE)
+end
+
+def save_env_config_var(key,value)
+  file = File.new(CONFIG_FILE,'a')
+  file << "export #{key}='#{value}'\n"
+  file.close
 end

@@ -70,6 +70,7 @@ repos.each do |git_repo|
               if ENV[key] != value
                 log "Setting ENV[#{key.inspect}] to #{value.inspect}"
                 ENV[key] = value
+                save_env_config_var(key,value)
               end
             end
           end
