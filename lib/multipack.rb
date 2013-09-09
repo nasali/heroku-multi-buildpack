@@ -8,7 +8,7 @@ CACHE_DIR = ARGV[1]
 
 TRIGGER_FILE_NAME = ".buildpacks"
 RELEASES_FILE_NAME = "releases_output.yml"
-CONFIG_FILE_NAME = ".bashrc"
+CONFIG_FILE_NAME = ".env"
 
 RELEASES_FILE = File.join(WORK_DIR,RELEASES_FILE_NAME)
 TRIGGER_FILE = File.join(WORK_DIR,TRIGGER_FILE_NAME)
@@ -81,6 +81,6 @@ end
 
 def save_env_config_var(key,value)
   file = File.new(CONFIG_FILE,'a')
-  file << "export #{key}='#{value}'\n"
+  file << "#{key}='#{value}'\n"
   file.close
 end
