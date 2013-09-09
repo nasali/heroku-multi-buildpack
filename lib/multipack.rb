@@ -81,6 +81,6 @@ end
 
 def save_env_config_var(key,value)
   file = File.new(CONFIG_FILE,'a')
-  file << "#{key}='#{value}'\n"
+  file << "export #{key}='#{value}'\n"
   file.close
 end
