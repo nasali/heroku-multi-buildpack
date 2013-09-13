@@ -81,8 +81,8 @@ def read_release_file
 end
 
 def save_env_config_var(key,value)
+  FileUtils.mkdir_p(File.dirname(file)) unless File.exists?(CONFIG_FILE)
   file = File.new(CONFIG_FILE,'a')
-  FileUtils.mkdir_p(File.dirname(file)) unless File.exists?(file)
   file << "export #{key}='#{value}'\n"
   file.close
 end
