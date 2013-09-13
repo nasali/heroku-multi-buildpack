@@ -5,14 +5,15 @@ require 'rubygems'
 
 WORK_DIR =  ARGV[0]
 CACHE_DIR = ARGV[1]
+CONFIG_DIR = File.join(WORK_DIR, ".profile.d")
 
 TRIGGER_FILE_NAME = ".buildpacks"
 RELEASES_FILE_NAME = "releases_output.yml"
-CONFIG_FILE_NAME = ".profile.d/ruby.sh"
+CONFIG_FILE_NAME = "ruby.sh"
 
 RELEASES_FILE = File.join(WORK_DIR,RELEASES_FILE_NAME)
 TRIGGER_FILE = File.join(WORK_DIR,TRIGGER_FILE_NAME)
-CONFIG_FILE = File.join(WORK_DIR,CONFIG_FILE_NAME)
+CONFIG_FILE = File.join(CONFIG_DIR,CONFIG_FILE_NAME)
 
 @env_yaml = nil
 
