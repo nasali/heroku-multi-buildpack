@@ -81,6 +81,7 @@ end
 
 def save_env_config_var(key,value)
   file = File.new(CONFIG_FILE,'a')
+  FileUtils.mkdir_p(File.dirname(file)) unless File.exists?(file)
   file << "export #{key}='#{value}'\n"
   file.close
 end
